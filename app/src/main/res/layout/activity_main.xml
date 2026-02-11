@@ -2,18 +2,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/main_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
     <ImageView
         android:id="@+id/main_img"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="@dimen/_150sdp"
         android:layout_centerHorizontal="true"
         android:src="@drawable/icon_1"
         android:layout_marginTop="@dimen/_30sdp"
-        android:layout_width="@dimen/_150sdp"
-        android:layout_height="@dimen/_150sdp"/>
+        />
 
     <TextView
         style="@style/text_20"
@@ -21,7 +22,8 @@
         android:layout_below="@+id/main_img"
         android:text="Login to your Account"
         android:textStyle="bold"
-        android:layout_marginTop="@dimen/_20sdp"/>
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginHorizontal="@dimen/_20sdp"/>
 
     <androidx.cardview.widget.CardView
         app:cardElevation="@dimen/_5sdp"
@@ -65,6 +67,7 @@
         android:text="Sign in"
         android:textColor="#3E2723"
         android:textSize="@dimen/_12sdp"
+        android:layout_marginHorizontal="@dimen/_20sdp"
       />
 
 
@@ -74,7 +77,7 @@
         android:layout_below="@+id/login_btn"
         android:layout_marginTop="@dimen/_35sdp"
 
-    android:text="- Or sign in with -"
+        android:text="- Or sign in with -"
        />
     
     <LinearLayout
@@ -150,6 +153,7 @@
             style="@style/text_15"
             android:text="Don't have an account? "/>
         <TextView
+            android:id="@+id/main_signup"
             style="@style/text_15"
             android:text="Sign up"
             android:textStyle="bold"/>

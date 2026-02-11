@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".MainActivity">
+
+    <RelativeLayout
+        android:id="@+id/main_root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="40dp"
+        android:paddingBottom="30dp">
+
+        <TextView
+            style="@style/text_20"
+            android:id="@+id/signup_title"
+            android:text="Sign Up Form"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="20dp"/>
+
+        <!-- Name -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/signup_name_card"
+            android:layout_below="@id/signup_title"
+            android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="20dp"
+            app:cardElevation="5dp"
+            app:cardCornerRadius="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                style="@style/edit_15"
+                android:id="@+id/signup_name"
+                android:inputType="textPersonName"
+                android:hint="Name"/>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Contact -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/signup_number_card"
+            android:layout_below="@id/signup_name_card"
+            android:layout_marginTop="15dp"
+            android:layout_marginHorizontal="20dp"
+            app:cardElevation="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                style="@style/edit_15"
+                android:id="@+id/signup_number"
+                android:inputType="number"
+                android:hint="Contact No."/>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Email -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/signup_email_card"
+            android:layout_below="@id/signup_number_card"
+            android:layout_marginTop="15dp"
+            android:layout_marginHorizontal="20dp"
+            app:cardElevation="5dp"
+            app:cardCornerRadius="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/signup_email"
+                style="@style/edit_15"
+                android:hint="Email"
+                android:inputType="textEmailAddress" />
+        </androidx.cardview.widget.CardView>
+
+        <!-- Password -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/signup_password_card"
+            android:layout_below="@id/signup_email_card"
+            android:layout_marginTop="15dp"
+            android:layout_marginHorizontal="20dp"
+            app:cardElevation="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                style="@style/edit_15"
+                android:id="@+id/signup_password"
+                android:inputType="textPassword"
+                android:hint="Password"/>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Confirm Password -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/signup_cnf_password_card"
+            android:layout_below="@id/signup_password_card"
+            android:layout_marginTop="15dp"
+            android:layout_marginHorizontal="20dp"
+            app:cardElevation="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                style="@style/edit_15"
+                android:id="@+id/signup_cnf_password"
+                android:inputType="textPassword"
+                android:hint="Confirm Password"/>
+        </androidx.cardview.widget.CardView>
+        <!-- City -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/signup_city_card"
+            android:layout_below="@id/signup_cnf_password_card"
+            android:layout_marginTop="15dp"
+            android:layout_marginHorizontal="20dp"
+            app:cardElevation="5dp"
+            app:cardCornerRadius="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                style="@style/edit_15"
+                android:id="@+id/signup_city"
+                android:inputType="textCapWords"
+                android:hint="City"/>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Gender -->
+        <RadioGroup
+            android:orientation="horizontal"
+            android:id="@+id/signup_gender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/signup_city_card"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="10dp">
+
+            <RadioButton
+                android:layout_weight="1"
+                style="@style/radio_15"
+                android:id="@+id/signup_male"
+                android:text="Male" />
+
+            <RadioButton
+                android:layout_weight="1"
+                style="@style/radio_15"
+                android:id="@+id/signup_female"
+                android:text="Female" />
+        </RadioGroup>
+
+        <!-- Signup Button -->
+        <Button
+            style="@style/button_1"
+            android:id="@+id/signup_btn"
+            android:layout_below="@id/signup_gender"
+            android:text="Sign up"
+            android:textColor="#3E2723"
+            android:textSize="14sp"
+            android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="20dp"/>
+
+       <!-- Social Media -->
+        <LinearLayout
+            android:id="@+id/main_socialmedia"
+            android:layout_below="@+id/signup_btn"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.cardview.widget.CardView
+                style="@style/img_bg"
+
+                android:layout_margin="@dimen/_5sdp"
+                app:cardElevation="@dimen/_3sdp"
+                android:layout_weight="1"
+                app:cardCornerRadius="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_55sdp">
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:src="@drawable/google"
+                    android:background="@color/white"
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_45sdp"/>
+
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_margin="@dimen/_5sdp"
+                app:cardElevation="@dimen/_3sdp"
+                android:layout_weight="1"
+                app:cardCornerRadius="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_55sdp">
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:src="@drawable/facebook"
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_45sdp"/>
+
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_margin="@dimen/_5sdp"
+                app:cardElevation="@dimen/_3sdp"
+                android:layout_weight="1"
+                app:cardCornerRadius="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_55sdp">
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:src="@drawable/twitter"
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_45sdp"/>
+
+            </androidx.cardview.widget.CardView>
+
+
+        </LinearLayout>
+        <!-- Login Redirect -->
+        <LinearLayout
+            android:id="@+id/login_redirect"
+            android:layout_marginTop="30dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_below="@id/main_socialmedia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <TextView
+                style="@style/text_15"
+                android:text="Already have an account? "/>
+
+            <TextView
+                android:id="@+id/signup_signin"
+                style="@style/text_15"
+                android:text="Login"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</ScrollView>
