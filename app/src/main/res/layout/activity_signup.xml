@@ -40,27 +40,11 @@
                 android:hint="Name"/>
         </androidx.cardview.widget.CardView>
 
-        <!-- Contact -->
-        <androidx.cardview.widget.CardView
-            android:id="@+id/signup_number_card"
-            android:layout_below="@id/signup_name_card"
-            android:layout_marginTop="15dp"
-            android:layout_marginHorizontal="20dp"
-            app:cardElevation="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                style="@style/edit_15"
-                android:id="@+id/signup_number"
-                android:inputType="number"
-                android:hint="Contact No."/>
-        </androidx.cardview.widget.CardView>
 
         <!-- Email -->
         <androidx.cardview.widget.CardView
             android:id="@+id/signup_email_card"
-            android:layout_below="@id/signup_number_card"
+            android:layout_below="@id/signup_name_card"
             android:layout_marginTop="15dp"
             android:layout_marginHorizontal="20dp"
             app:cardElevation="5dp"
@@ -108,10 +92,27 @@
                 android:inputType="textPassword"
                 android:hint="Confirm Password"/>
         </androidx.cardview.widget.CardView>
+
+        <!-- Contact -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/signup_number_card"
+            android:layout_below="@id/signup_cnf_password_card"
+            android:layout_marginTop="15dp"
+            android:layout_marginHorizontal="20dp"
+            app:cardElevation="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                style="@style/edit_15"
+                android:id="@+id/signup_number"
+                android:inputType="number"
+                android:hint="Contact No."/>
+        </androidx.cardview.widget.CardView>
         <!-- City -->
         <androidx.cardview.widget.CardView
             android:id="@+id/signup_city_card"
-            android:layout_below="@id/signup_cnf_password_card"
+            android:layout_below="@id/signup_number_card"
             android:layout_marginTop="15dp"
             android:layout_marginHorizontal="20dp"
             app:cardElevation="5dp"
@@ -126,15 +127,26 @@
                 android:hint="City"/>
         </androidx.cardview.widget.CardView>
 
+
+
+        <Spinner
+            android:id="@+id/signup_role"
+            android:layout_below="@id/signup_city_card"
+            android:layout_marginVertical="@dimen/_15sdp"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
         <!-- Gender -->
         <RadioGroup
             android:orientation="horizontal"
             android:id="@+id/signup_gender"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/signup_city_card"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="10dp">
+            android:layout_below="@id/signup_role"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:layout_marginTop="5dp">
 
             <RadioButton
                 android:layout_weight="1"
