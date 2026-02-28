@@ -29,7 +29,7 @@ public class SignupActivity extends AppCompatActivity {
 
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     Spinner spinner;
-    String[] role = {"Choose a role", "Adopter", "Pet Owner", "NGO / Shelter"};
+    String[] role = {"Choose a role", "User", "NGO / Shelter"};
     SQLiteDatabase db;
 
     @Override
