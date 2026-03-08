@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!-- Raw palette (from screenshot) -->
+    <color name="porcelain">#FAFAF7</color>
+    <color name="spicy_orange">#D84315</color>
+    <color name="honey_bronze">#FFB74D</color>
+    <color name="silver_taupe">#BCAAA4</color>
+    <color name="taupe">#8D6E63</color>
+    <color name="dark_coffee">#3E2723</color>
+    <color name="old_lace">#FFF3E0</color>
+    <color name="apricot_cream">#FFD597</color>
+    <color name="white">#FFFFFF</color>
+
+    <!-- Semantic aliases used in code -->
+    <color name="colorPrimary">@color/spicy_orange</color>
+    <color name="colorPrimaryDark">@color/dark_coffee</color>
+    <color name="colorAccent">@color/honey_bronze</color>
+    <color name="colorBackground">@color/old_lace</color>
+    <color name="colorSurface">@color/white</color>
+    <color name="colorTextPrimary">@color/dark_coffee</color>
+    <color name="colorTextSecondary">@color/taupe</color>
+    <color name="colorTextHint">@color/silver_taupe</color>
 </resources>

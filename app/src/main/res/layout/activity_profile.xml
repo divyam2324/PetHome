@@ -17,8 +17,8 @@
         <ImageView
             android:layout_marginTop="@dimen/_15sdp"
             android:padding="@dimen/_15sdp"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="@dimen/_75sdp"
+            android:layout_height="@dimen/_75sdp"
             android:paddingHorizontal="@dimen/_10sdp"
             android:layout_marginHorizontal="@dimen/_50sdp"
             android:src="@drawable/ic_profile" />
@@ -139,8 +139,15 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
-        android:layout_height="72dp"
+        android:layout_height="@dimen/_62sdp"
         android:layout_alignParentBottom="true"
+        android:background="#FFFFFF"
+        android:elevation="@dimen/_10sdp"
+        app:itemIconSize="@dimen/_22sdp"
+        app:itemIconTint="@drawable/bottom_nav_selector"
+        app:itemTextColor="@drawable/bottom_nav_selector"
+        app:labelVisibilityMode="labeled"
         app:menu="@menu/bottom_menu" />
+
 
 </RelativeLayout>

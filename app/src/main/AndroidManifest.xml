@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -13,6 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PetHome"
         android:usesCleartextTraffic="true">
+
         <activity
             android:name=".SplashActivity"
             android:exported="true">
@@ -21,17 +24,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".HomeActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SignupActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="false" />
-        <activity android:name=".ProfileActivity"
-            android:exported="false"/>
+
+        <activity android:name=".HomeActivity" android:exported="false" />
+        <activity android:name=".SignupActivity" android:exported="false" />
+        <activity android:name=".MainActivity" android:exported="false" />
+        <activity android:name=".ProfileActivity" android:exported="false"/>
+        <activity android:name=".ListPetActivity" android:exported="false"/>
+        <activity android:name=".AdoptActivity" android:exported="false" />
+        <activity android:name=".PetDetailActivity" android:exported="false"/>
+        <activity android:name=".MyRequestsActivity" android:exported="false"/>
+        <activity android:name=".OwnerRequestActivity" android:exported="false"/>
+        <activity android:name=".SheltersActivity" android:exported="false"/>
+        <activity android:name=".FavoritesActivity" android:exported="false"/>
+        <activity android:name=".HistoryActivity" android:exported="false"/>
+
     </application>
 
 </manifest>
