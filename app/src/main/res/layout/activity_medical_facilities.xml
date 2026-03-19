@@ -3,51 +3,60 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5">
+    android:background="@color/colorBackground">
 
     <RelativeLayout
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_56sdp"
-        android:background="#FFB74D"
-        android:paddingHorizontal="@dimen/_16sdp">
+        android:layout_height="@dimen/_80sdp"
+        android:background="@color/honey_bronze"
+        android:paddingHorizontal="@dimen/_16sdp"
+        android:paddingTop="@dimen/_20sdp">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="@dimen/_24sdp"
+            android:layout_height="@dimen/_24sdp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_back"
+            app:tint="@color/dark_coffee" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Nearby Shelters"
-            android:textColor="#3E2723"
+            android:text="Available Doctors"
+            android:textColor="@color/dark_coffee"
             android:textSize="@dimen/_16sdp"
             android:textStyle="bold" />
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerShelters"
+        android:id="@+id/recyclerDoctors"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar"
-        android:layout_above="@id/bottomNav"
         android:padding="@dimen/_8sdp"
         android:clipToPadding="false" />
 
     <TextView
-        android:id="@+id/txtNoShelters"
+        android:id="@+id/txtNoDoctors"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="No shelters found."
+        android:text="No doctors added yet."
+        android:textColor="@color/taupe"
         android:visibility="gone" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNav"
-        android:layout_width="match_parent"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddDoctor"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:background="@android:color/white"
-        app:itemIconTint="@drawable/bottom_nav_selector"
-        app:itemTextColor="@drawable/bottom_nav_selector"
-        app:labelVisibilityMode="labeled"
-        app:menu="@menu/bottom_menu" />
+        android:layout_margin="@dimen/_20sdp"
+        android:src="@drawable/ic_add"
+        app:backgroundTint="@color/spicy_orange"
+        app:tint="@color/white" />
 
 </RelativeLayout>

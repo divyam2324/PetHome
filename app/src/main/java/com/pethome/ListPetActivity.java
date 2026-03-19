@@ -4,14 +4,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.widget.*;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ListPetActivity extends AppCompatActivity {
 
-    EditText etPetName, etBreed, etAge, etContactName, etContactInfo;
+    EditText etPetName, etBreed, etAge, etContactName, etContactInfo, etCareInfo;
     Spinner spSpecies;
     RadioGroup rgGender;
     CheckBox cbChildren, cbOtherPets;
@@ -35,6 +34,7 @@ public class ListPetActivity extends AppCompatActivity {
         etAge = findViewById(R.id.etAge);
         etContactName = findViewById(R.id.etContactName);
         etContactInfo = findViewById(R.id.etContactInfo);
+        etCareInfo = findViewById(R.id.etCareInfo);
         spSpecies = findViewById(R.id.spSpecies);
         rgGender = findViewById(R.id.rgGender);
         cbChildren = findViewById(R.id.cbChildren);
@@ -91,6 +91,7 @@ public class ListPetActivity extends AppCompatActivity {
         String age = etAge.getText().toString().trim();
         String contactName = etContactName.getText().toString().trim();
         String contactInfo = etContactInfo.getText().toString().trim();
+        String careInfo = etCareInfo.getText().toString().trim();
 
         int selectedGenderId = rgGender.getCheckedRadioButtonId();
 
@@ -119,7 +120,8 @@ public class ListPetActivity extends AppCompatActivity {
                 contactName,
                 contactInfo,
                 imageUri.toString(),
-                ownerEmail
+                ownerEmail,
+                careInfo
         );
 
         if (inserted) {

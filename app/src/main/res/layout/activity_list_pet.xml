@@ -20,7 +20,7 @@
         <EditText
             style="@style/edit_15"
             android:id="@+id/etPetName"
-            android:hint="PetName"/>
+            android:hint="Pet Name"/>
 
         <Spinner
             android:id="@+id/spSpecies"
@@ -39,7 +39,7 @@
             style="@style/edit_15"
             android:id="@+id/etAge"
             android:hint="Age"
-            android:inputType="number"
+            android:inputType="text"
             android:layout_marginTop="10dp" />
 
         <RadioGroup
@@ -75,6 +75,14 @@
             android:layout_height="wrap_content"
             android:text="Good with other pets?"/>
 
+        <EditText
+            style="@style/edit_15"
+            android:id="@+id/etCareInfo"
+            android:hint="Care Instructions"
+            android:gravity="top"
+            android:minLines="3"
+            android:layout_marginTop="10dp" />
+
         <!-- 🔥 IMAGE SECTION -->
 
         <ImageView
@@ -103,7 +111,7 @@
             style="@style/edit_15"
             android:id="@+id/etContactInfo"
             android:hint="Phone / Email"
-            android:inputType="number"
+            android:inputType="text"
             android:layout_marginTop="10dp" />
 
         <Button
@@ -113,8 +121,6 @@
             android:layout_height="wrap_content"
             android:text="Submit"
             android:layout_marginTop="15dp"/>
-
-
 
     </LinearLayout>
 

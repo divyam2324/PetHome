@@ -38,11 +38,17 @@ public class AdoptActivity extends AppCompatActivity {
             Intent intent = new Intent(AdoptActivity.this, PetDetailActivity.class);
             intent.putExtra("PETID", pet.getId());
             intent.putExtra("PETNAME", pet.getName());
+            intent.putExtra("SPECIES", pet.getSpecies());
             intent.putExtra("BREED", pet.getBreed());
             intent.putExtra("AGE", pet.getAge());
             intent.putExtra("GENDER", pet.getGender());
+            intent.putExtra("CHILDREN", pet.isGoodWithChildren());
+            intent.putExtra("OTHER_PETS", pet.isGoodWithOtherPets());
+            intent.putExtra("CONTACT_NAME", pet.getContactName());
+            intent.putExtra("CONTACT_INFO", pet.getContactInfo());
             intent.putExtra("IMAGE", pet.getImage());
             intent.putExtra("OWNEREMAIL", pet.getOwnerEmail());
+            // Need to handle CARE_INFO if needed here too
             startActivity(intent);
         });
 
@@ -90,13 +96,18 @@ public class AdoptActivity extends AppCompatActivity {
             do {
                 int id = cursor.getInt(cursor.getColumnIndexOrThrow("PETID"));
                 String name = cursor.getString(cursor.getColumnIndexOrThrow("PETNAME"));
+                String species = cursor.getString(cursor.getColumnIndexOrThrow("SPECIES"));
                 String breed = cursor.getString(cursor.getColumnIndexOrThrow("BREED"));
                 String age = cursor.getString(cursor.getColumnIndexOrThrow("AGE"));
                 String gender = cursor.getString(cursor.getColumnIndexOrThrow("GENDER"));
+                int children = cursor.getInt(cursor.getColumnIndexOrThrow("GOODWITHCHILDREN"));
+                int otherPets = cursor.getInt(cursor.getColumnIndexOrThrow("GOODWITHOTHERPETS"));
+                String contactName = cursor.getString(cursor.getColumnIndexOrThrow("CONTACTNAME"));
+                String contactInfo = cursor.getString(cursor.getColumnIndexOrThrow("CONTACTINFO"));
                 String image = cursor.getString(cursor.getColumnIndexOrThrow("IMAGE"));
                 String ownerEmail = cursor.getString(cursor.getColumnIndexOrThrow("OWNEREMAIL"));
 
-                petList.add(new PetModel(id, name, breed, age, gender, image, ownerEmail));
+                petList.add(new PetModel(id, name, species, breed, age, gender, children == 1, otherPets == 1, contactName, contactInfo, image, ownerEmail));
             } while (cursor.moveToNext());
             cursor.close();
         }

@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
+
+    <!-- Top App Bar -->
+    <RelativeLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_80sdp"
+        android:background="#FFDDA9"
+        android:paddingHorizontal="@dimen/_18sdp"
+        android:paddingTop="@dimen/_20sdp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="#FFDDA9"
+            android:paddingTop="@dimen/_20sdp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Shelter Dashboard"
+                android:textColor="@color/dark_coffee"
+                android:textSize="@dimen/_17sdp"
+                android:background="#FFDDA9"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtShelterName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NGO Profile"
+                android:textColor="@color/taupe"
+                android:textSize="@dimen/_10sdp"
+                android:background="#FFDDA9"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/btnShelterProfile"
+            android:layout_width="@dimen/_45sdp"
+            android:layout_height="@dimen/_45sdp"
+            android:layout_alignParentEnd="true"
+            app:cardCornerRadius="@dimen/_20sdp"
+            app:cardBackgroundColor="@color/white"
+            app:cardElevation="@dimen/_4sdp">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_profile"
+                android:padding="@dimen/_8sdp"
+                app:tint="@color/dark_coffee" />
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/topBar"
+        android:padding="@dimen/_12sdp"
+        android:clipToPadding="false"
+        app:cardBackgroundColor="#FFF3E0"
+        android:paddingBottom="@dimen/_20sdp">
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="2"
+            android:alignmentMode="alignMargins"
+            android:columnOrderPreserved="false">
+
+            <!-- List Pets -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardAddPet"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_110sdp"
+                android:layout_columnWeight="1"
+                android:layout_margin="@dimen/_8sdp"
+                app:cardCornerRadius="@dimen/_15sdp"
+                app:cardElevation="@dimen/_4sdp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:background="@color/white">
+                    <ImageView
+                        android:layout_width="@dimen/_36sdp"
+                        android:layout_height="@dimen/_36sdp"
+                        android:src="@drawable/ic_add"
+                        android:background="@color/white"
+                        app:tint="@color/spicy_orange" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="List New Pet"
+                        android:textColor="@color/dark_coffee"
+                        android:textStyle="bold"
+                        android:background="@color/white"
+                        android:layout_marginTop="@dimen/_8sdp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Manage Requests -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardManageRequests"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_110sdp"
+                android:layout_columnWeight="1"
+                android:layout_margin="@dimen/_8sdp"
+                app:cardCornerRadius="@dimen/_15sdp"
+                app:cardElevation="@dimen/_4sdp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:background="@color/white">
+                    <ImageView
+                        android:layout_width="@dimen/_36sdp"
+                        android:layout_height="@dimen/_36sdp"
+                        android:src="@drawable/ic_inbox"
+
+                        android:background="@color/white"
+                        app:tint="@color/spicy_orange" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Requests"
+                        android:textColor="@color/dark_coffee"
+                        android:textStyle="bold"
+                        android:background="@color/white"
+                        android:layout_marginTop="@dimen/_8sdp" />
+                    <TextView
+                        android:id="@+id/txtRequestCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0 New"
+                        android:textSize="@dimen/_10sdp"
+                        android:background="@color/white"
+                        android:textColor="@color/spicy_orange"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Manage Listings -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardManageListings"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_110sdp"
+                android:layout_columnWeight="1"
+                android:layout_margin="@dimen/_8sdp"
+                app:cardCornerRadius="@dimen/_15sdp"
+                app:cardElevation="@dimen/_4sdp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:background="@color/white">
+                    <ImageView
+                        android:layout_width="@dimen/_36sdp"
+                        android:layout_height="@dimen/_36sdp"
+                        android:src="@drawable/ic_pets"
+                        android:background="@color/white"
+                        app:tint="@color/spicy_orange" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Manage Pets"
+                        android:textColor="@color/dark_coffee"
+                        android:textStyle="bold"
+                        android:background="@color/white"
+                        android:layout_marginTop="@dimen/_8sdp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Adoption History -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardAdoptionHistory"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_110sdp"
+                android:layout_columnWeight="1"
+                android:layout_margin="@dimen/_8sdp"
+                app:cardCornerRadius="@dimen/_15sdp"
+                app:cardElevation="@dimen/_4sdp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:background="@color/white">
+                    <ImageView
+                        android:layout_width="@dimen/_36sdp"
+                        android:layout_height="@dimen/_36sdp"
+                        android:src="@drawable/ic_history"
+                        android:background="@color/white"
+                        app:tint="@color/spicy_orange" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="History"
+                        android:textColor="@color/dark_coffee"
+                        android:textStyle="bold"
+                        android:background="@color/white"
+                        android:layout_marginTop="@dimen/_8sdp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Medical Info -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardMedicalInfo"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_110sdp"
+                android:layout_columnWeight="1"
+                android:layout_margin="@dimen/_8sdp"
+                app:cardCornerRadius="@dimen/_15sdp"
+                app:cardElevation="@dimen/_4sdp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:background="@color/white">
+                    <ImageView
+                        android:layout_width="@dimen/_45sdp"
+                        android:layout_height="@dimen/_45sdp"
+                        android:src="@drawable/ic_doc"
+                        android:background="@color/white"
+                        app:tint="@color/spicy_orange" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Doctors"
+                        android:textColor="@color/dark_coffee"
+                        android:textStyle="bold"
+                        android:background="@color/white"
+                        android:layout_marginTop="@dimen/_8sdp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Logout -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardLogout"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_110sdp"
+                android:layout_columnWeight="1"
+                android:layout_margin="@dimen/_8sdp"
+                app:cardCornerRadius="@dimen/_15sdp"
+                app:cardElevation="@dimen/_4sdp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:background="@color/white">
+                    <ImageView
+                        android:layout_width="@dimen/_36sdp"
+                        android:layout_height="@dimen/_36sdp"
+                        android:background="@color/white"
+                        app:tint="@color/spicy_orange"
+                        android:src="@drawable/logout" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Logout"
+                        android:textStyle="bold"
+                        android:background="@color/white"
+                        android:layout_marginTop="@dimen/_8sdp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </GridLayout>
+    </ScrollView>
+
+</RelativeLayout>

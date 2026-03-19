@@ -24,14 +24,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // AUTO LOGIN CHECK (MUST BE BEFORE setContentView logic usage)
+        // AUTO LOGIN CHECK
         SharedPreferences prefs =
                 getSharedPreferences("UserSession", MODE_PRIVATE);
 
         if (prefs.getBoolean("isLoggedIn", false)) {
-            startActivity(new Intent(this, HomeActivity.class));
+            String role = prefs.getString("role", "User");
+            if ("NGO / Shelter".equals(role)) {
+                startActivity(new Intent(this, ShelterDashboardActivity.class));
+            } else {
+                startActivity(new Intent(this, HomeActivity.class));
+            }
             finish();
-            return; // important to stop further execution
+            return;
         }
 
         setContentView(R.layout.activity_main);
@@ -43,19 +48,16 @@ public class MainActivity extends AppCompatActivity {
 
         dbHelper = new DatabaseHelper(this);
 
-        // 🔹 Go to Signup page
         signupText.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, SignupActivity.class);
             startActivity(intent);
         });
 
-        // 🔹 Login Button
         loginBtn.setOnClickListener(v -> {
 
             String emailText = email.getText().toString().trim();
             String passwordText = password.getText().toString().trim();
 
-            // VALIDATIONS
             if (emailText.isEmpty()) {
                 email.setError("Email Required");
                 return;
@@ -76,15 +78,15 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
-            // SAFE LOGIN QUERY
             Cursor cursor = dbHelper.loginUser(emailText, passwordText);
 
             if (cursor.moveToFirst()) {
+                String role = cursor.getString(cursor.getColumnIndexOrThrow("ROLE"));
 
-                // SAVE USER SESSION
                 getSharedPreferences("UserSession", MODE_PRIVATE)
                         .edit()
                         .putString("email", emailText)
+                        .putString("role", role)
                         .putBoolean("isLoggedIn", true)
                         .apply();
 
@@ -92,7 +94,11 @@ public class MainActivity extends AppCompatActivity {
                         "Login Successful",
                         Toast.LENGTH_SHORT).show();
 
-                startActivity(new Intent(MainActivity.this, HomeActivity.class));
+                if ("NGO / Shelter".equals(role)) {
+                    startActivity(new Intent(MainActivity.this, ShelterDashboardActivity.class));
+                } else {
+                    startActivity(new Intent(MainActivity.this, HomeActivity.class));
+                }
                 finish();
 
             } else {

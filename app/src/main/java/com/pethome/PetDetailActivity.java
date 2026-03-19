@@ -1,8 +1,10 @@
 package com.pethome;
 
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,15 +17,14 @@ import com.bumptech.glide.Glide;
 
 public class PetDetailActivity extends AppCompatActivity {
 
-    TextView txtName, txtBreed, txtAge, txtGender;
+    TextView txtName, txtBreed, txtAge, txtGender, txtCareInfo, txtOwnerInfo;
     ImageView imgPet;
     Button btnAdopt;
 
     DatabaseHelper dbHelper;
 
-    String name, breed, age, gender, image;
+    String name, breed, age, gender, image, contactName, contactInfo, ownerEmail;
     int petId;
-    String ownerEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +37,12 @@ public class PetDetailActivity extends AppCompatActivity {
         txtBreed = findViewById(R.id.detailBreed);
         txtAge = findViewById(R.id.detailAge);
         txtGender = findViewById(R.id.detailGender);
+        txtCareInfo = findViewById(R.id.detailCareInfo);
+        txtOwnerInfo = findViewById(R.id.detailOwnerInfo);
         imgPet = findViewById(R.id.detailImage);
         btnAdopt = findViewById(R.id.btnAdopt);
+
+        findViewById(R.id.btnBack).setOnClickListener(v -> finish());
 
         // RECEIVE DATA FROM INTENT
         petId = getIntent().getIntExtra("PETID", -1);
@@ -47,28 +52,55 @@ public class PetDetailActivity extends AppCompatActivity {
         gender = getIntent().getStringExtra("GENDER");
         image = getIntent().getStringExtra("IMAGE");
         ownerEmail = getIntent().getStringExtra("OWNEREMAIL");
+        contactName = getIntent().getStringExtra("CONTACT_NAME");
+        contactInfo = getIntent().getStringExtra("CONTACT_INFO");
 
         txtName.setText(name);
-        txtBreed.setText("Breed: " + breed);
-        txtAge.setText("Age: " + age);
-        txtGender.setText("Gender: " + gender);
+        txtBreed.setText(breed);
+        txtAge.setText(age);
+        txtGender.setText(gender);
+        
+        if (contactName != null && !contactName.isEmpty()) {
+            txtOwnerInfo.setText("Posted by: " + contactName + "\nContact: " + contactInfo);
+        } else {
+            txtOwnerInfo.setText("Contact: " + ownerEmail);
+        }
+
+        loadExtraDetails();
 
         if (image != null && !image.isEmpty()) {
-            // Use same Glide logic as PetAdapter to handle both Drawables and Uris
             int resId = getResources().getIdentifier(image, "drawable", getPackageName());
             if (resId != 0) {
-                Glide.with(this).load(resId).placeholder(R.drawable.ic_add).into(imgPet);
+                Glide.with(this).load(resId).placeholder(R.drawable.ic_pets).into(imgPet);
             } else {
-                Glide.with(this).load(Uri.parse(image)).placeholder(R.drawable.ic_add).into(imgPet);
+                Glide.with(this).load(Uri.parse(image)).placeholder(R.drawable.ic_pets).into(imgPet);
             }
-        } else {
-            imgPet.setImageResource(R.drawable.ic_add);
         }
 
         btnAdopt.setOnClickListener(v -> confirmAdoption());
     }
 
+    private void loadExtraDetails() {
+        // Fetch CARE_INFO from DB as it might not be in Intent
+        Cursor cursor = dbHelper.getReadableDatabase().rawQuery("SELECT CARE_INFO FROM PETS WHERE PETID=?", new String[]{String.valueOf(petId)});
+        if (cursor != null && cursor.moveToFirst()) {
+            String care = cursor.getString(0);
+            if (care != null && !care.isEmpty()) {
+                txtCareInfo.setText(care);
+            }
+            cursor.close();
+        }
+    }
+
     private void confirmAdoption() {
+        SharedPreferences prefs = getSharedPreferences("UserSession", MODE_PRIVATE);
+        String role = prefs.getString("role", "User");
+        
+        if ("NGO / Shelter".equals(role)) {
+            Toast.makeText(this, "Shelters cannot request adoptions", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         new AlertDialog.Builder(this)
                 .setTitle("Adoption Request")
                 .setMessage("Send adoption request for " + name + "?")

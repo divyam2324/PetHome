@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -15,6 +17,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PetHome"
         android:usesCleartextTraffic="true">
+
+        <!-- GOOGLE MAPS API KEY -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBGyhtI4rRHKnGY5L-nJx6to9UMY4AQftw" />
 
         <activity
             android:name=".SplashActivity"
@@ -37,6 +44,11 @@
         <activity android:name=".SheltersActivity" android:exported="false"/>
         <activity android:name=".FavoritesActivity" android:exported="false"/>
         <activity android:name=".HistoryActivity" android:exported="false"/>
+        <activity android:name=".ShelterDashboardActivity" android:exported="false"/>
+        <activity android:name=".ManageListingsActivity" android:exported="false"/>
+        <activity android:name=".MedicalFacilitiesActivity" android:exported="false"/>
+        <activity android:name=".AddDoctorActivity" android:exported="false"/>
+        <activity android:name=".SheltersMapActivity" android:exported="false"/>
 
     </application>
 

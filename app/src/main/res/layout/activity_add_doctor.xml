@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/_16sdp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_60sdp"
+            android:layout_marginTop="@dimen/_10sdp">
+            <ImageView
+                android:id="@+id/btnBack"
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_back"
+                app:tint="@color/dark_coffee" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Add New Doctor"
+                android:textColor="@color/dark_coffee"
+                android:textSize="@dimen/_18sdp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            app:cardCornerRadius="@dimen/_10sdp"
+            app:cardElevation="@dimen/_2sdp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/_12sdp">
+
+                <EditText
+                    android:id="@+id/etDoctorName"
+                    style="@style/edit_15"
+                    android:hint="Full Name"
+                    android:background="@drawable/custom_button"
+                    android:backgroundTint="@color/white"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/etSpecialization"
+                    style="@style/edit_15"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:background="@drawable/custom_button"
+                    android:backgroundTint="@color/white"
+                    android:hint="Specialization (e.g. Vet Surgeon)"
+                    android:inputType="text" />
+
+                <EditText
+                    android:id="@+id/etExperience"
+                    style="@style/edit_15"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:background="@drawable/custom_button"
+                    android:backgroundTint="@color/white"
+                    android:hint="Experience (e.g. 5 Years)"
+                    android:inputType="text" />
+
+                <EditText
+                    android:id="@+id/etDoctorContact"
+                    style="@style/edit_15"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:background="@drawable/custom_button"
+                    android:backgroundTint="@color/white"
+                    android:hint="Contact Number"
+                    android:inputType="phone" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/btnAddDoctor"
+            style="@style/button_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_40sdp"
+            android:text="Save Doctor Information"
+            android:textColor="@color/dark_coffee"
+            android:backgroundTint="@color/honey_bronze" />
+
+    </LinearLayout>
+</ScrollView>

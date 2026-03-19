@@ -9,11 +9,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "Pethome.db";
-    private static final int DATABASE_VERSION = 7; // Bumped version to add FAVORITES table
+    private static final int DATABASE_VERSION = 11; // No change in version needed if just adding a query
 
     private static final String TABLE_PETS = "PETS";
     private static final String TABLE_REQUESTS = "REQUESTS";
     private static final String TABLE_FAVORITES = "FAVORITES";
+    private static final String TABLE_DOCTORS = "DOCTORS";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -29,7 +30,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "PASSWORD TEXT," +
                 "GENDER TEXT," +
                 "CITY TEXT," +
-                "ROLE TEXT)");
+                "ROLE TEXT," +
+                "MEDICAL_INFO TEXT," +
+                "LATITUDE REAL," +
+                "LONGITUDE REAL)");
 
         db.execSQL("CREATE TABLE IF NOT EXISTS PETS(" +
                 "PETID INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -44,7 +48,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "CONTACTINFO TEXT," +
                 "IMAGE TEXT," +
                 "OWNEREMAIL TEXT," +
-                "IS_REQUESTED INTEGER DEFAULT 0)");
+                "IS_REQUESTED INTEGER DEFAULT 0," +
+                "CARE_INFO TEXT)");
 
         db.execSQL("CREATE TABLE IF NOT EXISTS REQUESTS (" +
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -63,32 +68,79 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "USEREMAIL TEXT," +
                 "PETID INTEGER)");
 
-        // Insert Dummy Data
+        db.execSQL("CREATE TABLE IF NOT EXISTS DOCTORS (" +
+                "ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "NAME TEXT," +
+                "SPECIALIZATION TEXT," +
+                "CONTACT TEXT," +
+                "EXPERIENCE TEXT," +
+                "SHELTER_EMAIL TEXT)");
+
         insertDummyPets(db);
     }
 
     private void insertDummyPets(SQLiteDatabase db) {
-        db.execSQL("INSERT INTO PETS (PETNAME, SPECIES, BREED, AGE, GENDER, GOODWITHCHILDREN, GOODWITHOTHERPETS, CONTACTNAME, CONTACTINFO, IMAGE, OWNEREMAIL, IS_REQUESTED) " +
-                "VALUES ('Buddy', 'Dog', 'Golden Retriever', '2 Years', 'Male', 1, 1, 'PetHome Admin', 'admin@pethome.com', 'dog_buddy', 'system@pethome.com', 0)");
-        db.execSQL("INSERT INTO PETS (PETNAME, SPECIES, BREED, AGE, GENDER, GOODWITHCHILDREN, GOODWITHOTHERPETS, CONTACTNAME, CONTACTINFO, IMAGE, OWNEREMAIL, IS_REQUESTED) " +
-                "VALUES ('Luna', 'Cat', 'Persian', '1 Year', 'Female', 1, 1, 'PetHome Admin', 'admin@pethome.com', 'cat_luna', 'system@pethome.com', 0)");
-        db.execSQL("INSERT INTO PETS (PETNAME, SPECIES, BREED, AGE, GENDER, GOODWITHCHILDREN, GOODWITHOTHERPETS, CONTACTNAME, CONTACTINFO, IMAGE, OWNEREMAIL, IS_REQUESTED) " +
-                "VALUES ('Charlie', 'Dog', 'Beagle', '3 Years', 'Male', 1, 0, 'PetHome Admin', 'admin@pethome.com', 'dog_charlie', 'system@pethome.com', 0)");
+        db.execSQL("INSERT INTO PETS (PETNAME, SPECIES, BREED, AGE, GENDER, GOODWITHCHILDREN, GOODWITHOTHERPETS, CONTACTNAME, CONTACTINFO, IMAGE, OWNEREMAIL, IS_REQUESTED, CARE_INFO) " +
+                "VALUES ('Buddy', 'Dog', 'Golden Retriever', '2 Years', 'Male', 1, 1, 'PetHome Admin', 'admin@pethome.com', 'dog_buddy', 'system@pethome.com', 0, 'Keep active, regular brushing required.')");
+        db.execSQL("INSERT INTO PETS (PETNAME, SPECIES, BREED, AGE, GENDER, GOODWITHCHILDREN, GOODWITHOTHERPETS, CONTACTNAME, CONTACTINFO, IMAGE, OWNEREMAIL, IS_REQUESTED, CARE_INFO) " +
+                "VALUES ('Luna', 'Cat', 'Persian', '1 Year', 'Female', 1, 1, 'PetHome Admin', 'admin@pethome.com', 'cat_luna', 'system@pethome.com', 0, 'Indoor only, high maintenance fur.')");
+        db.execSQL("INSERT INTO PETS (PETNAME, SPECIES, BREED, AGE, GENDER, GOODWITHCHILDREN, GOODWITHOTHERPETS, CONTACTNAME, CONTACTINFO, IMAGE, OWNEREMAIL, IS_REQUESTED, CARE_INFO) " +
+                "VALUES ('Charlie', 'Dog', 'Beagle', '3 Years', 'Male', 1, 0, 'PetHome Admin', 'admin@pethome.com', 'dog_charlie', 'system@pethome.com', 0, 'Needs long walks, loves to sniff everything!')");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (oldVersion < 7) {
-            db.execSQL("CREATE TABLE IF NOT EXISTS FAVORITES (" +
-                    "ID INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    "USEREMAIL TEXT," +
-                    "PETID INTEGER)");
+            db.execSQL("CREATE TABLE IF NOT EXISTS FAVORITES (ID INTEGER PRIMARY KEY AUTOINCREMENT, USEREMAIL TEXT, PETID INTEGER)");
+        }
+        if (oldVersion < 8) {
+            db.execSQL("ALTER TABLE USERS ADD COLUMN MEDICAL_INFO TEXT");
+        }
+        if (oldVersion < 9) {
+            db.execSQL("ALTER TABLE PETS ADD COLUMN CARE_INFO TEXT");
+        }
+        if (oldVersion < 10) {
+            db.execSQL("CREATE TABLE IF NOT EXISTS DOCTORS (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, SPECIALIZATION TEXT, CONTACT TEXT, EXPERIENCE TEXT, SHELTER_EMAIL TEXT)");
+        }
+        if (oldVersion < 11) {
+            db.execSQL("ALTER TABLE USERS ADD COLUMN LATITUDE REAL");
+            db.execSQL("ALTER TABLE USERS ADD COLUMN LONGITUDE REAL");
         }
     }
 
+    // --- DOCTORS SECTION ---
+
+    public boolean insertDoctor(String name, String spec, String contact, String exp, String shelterEmail) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("NAME", name);
+        values.put("SPECIALIZATION", spec);
+        values.put("CONTACT", contact);
+        values.put("EXPERIENCE", exp);
+        values.put("SHELTER_EMAIL", shelterEmail);
+        return db.insert(TABLE_DOCTORS, null, values) != -1;
+    }
+
+    public Cursor getDoctorsByShelter(String shelterEmail) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM DOCTORS WHERE SHELTER_EMAIL=?", new String[]{shelterEmail});
+    }
+
+    public Cursor getAllDoctorsWithShelter() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT D.*, U.NAME as SHELTER_NAME FROM DOCTORS D INNER JOIN USERS U ON D.SHELTER_EMAIL = U.EMAIL", null);
+    }
+
+    public void deleteDoctor(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_DOCTORS, "ID=?", new String[]{String.valueOf(id)});
+    }
+
+    // --- OTHER METHODS ---
+
     public boolean insertPet(String petName, String species, String breed, String age, String gender,
                              boolean goodWithChildren, boolean goodWithOtherPets, String contactName,
-                             String contactInfo, String imagePath, String ownerEmail) {
+                             String contactInfo, String imagePath, String ownerEmail, String careInfo) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("PETNAME", petName);
@@ -103,6 +155,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put("IMAGE", imagePath);
         values.put("OWNEREMAIL", ownerEmail);
         values.put("IS_REQUESTED", 0);
+        values.put("CARE_INFO", careInfo);
         return db.insert(TABLE_PETS, null, values) != -1;
     }
 
@@ -131,6 +184,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor getAllAvailablePets() {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM PETS WHERE IS_REQUESTED = 0", null);
+    }
+
+    public Cursor getPetsByOwner(String ownerEmail) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM PETS WHERE OWNEREMAIL=?", new String[]{ownerEmail});
+    }
+
+    public void deletePet(int petId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_PETS, "PETID=?", new String[]{String.valueOf(petId)});
+        db.delete(TABLE_REQUESTS, "PETID=?", new String[]{String.valueOf(petId)});
     }
 
     public boolean insertRequest(int petId, String name, String breed, String age, String gender, String image, String requestUser, String ownerEmail) {
@@ -206,7 +270,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.rawQuery("SELECT * FROM REQUESTS WHERE REQUESTUSER=?", new String[]{userEmail});
     }
 
-    // --- FAVORITES SECTION ---
+    public Cursor getAdoptionHistory(String email, boolean isShelter) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        if (isShelter) {
+            return db.rawQuery("SELECT * FROM REQUESTS WHERE OWNEREMAIL=? AND STATUS='APPROVED'", new String[]{email});
+        } else {
+            return db.rawQuery("SELECT * FROM REQUESTS WHERE REQUESTUSER=? AND STATUS='APPROVED'", new String[]{email});
+        }
+    }
+
+    public void updateMedicalInfo(String email, String info) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("MEDICAL_INFO", info);
+        db.update("USERS", values, "EMAIL=?", new String[]{email});
+    }
+
+    public Cursor getAllShelters() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM USERS WHERE ROLE='NGO / Shelter'", null);
+    }
 
     public boolean isFavorite(String email, int petId) {
         SQLiteDatabase db = this.getReadableDatabase();
