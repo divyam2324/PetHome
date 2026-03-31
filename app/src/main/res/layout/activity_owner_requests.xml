@@ -10,15 +10,17 @@
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_60sdp"
-        android:background="#FFDDA9"
+        android:background="#FFB74D"
         android:paddingHorizontal="@dimen/_18sdp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_centerInParent="true"
             android:text="Received Requests"
             android:textColor="#3E2723"
             android:textSize="@dimen/_17sdp"
+            android:background="#FFB74D"
             android:textStyle="bold" />
     </RelativeLayout>
 

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,7 +41,6 @@
             android:paddingHorizontal="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_minus15sdp"
             android:background="@drawable/curve_bottom_cream"
-            android:backgroundTint="#FFFFFF"
             android:elevation="@dimen/_4sdp">
 
             <TextView
@@ -132,7 +131,7 @@
                 style="@style/button_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_77sdp"
                 android:layout_marginBottom="@dimen/_10sdp"
                 android:text="Send Adoption Request" />
 

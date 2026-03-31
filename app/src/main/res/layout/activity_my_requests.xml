@@ -11,6 +11,7 @@
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_60sdp"
+        android:background="#FFB74D"
         android:paddingHorizontal="@dimen/_18sdp">
 
         <ImageView
@@ -19,12 +20,15 @@
             android:layout_height="@dimen/_22sdp"
             android:layout_centerVertical="true"
             android:src="@drawable/ic_back"
+            android:background="#FFB74D"
             app:tint="#3E2723" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:background="#FFB74D"
+
             android:text="My Requests"
             android:textColor="#3E2723"
             android:textSize="@dimen/_17sdp"

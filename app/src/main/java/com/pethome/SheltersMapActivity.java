@@ -2,28 +2,32 @@ package com.pethome;
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
+import org.osmdroid.api.IMapController;
+import org.osmdroid.config.Configuration;
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.Marker;
 
 import java.util.ArrayList;
 
-public class SheltersMapActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class SheltersMapActivity extends AppCompatActivity {
 
-    private GoogleMap mMap;
+    private MapView map = null;
     private DatabaseHelper dbHelper;
     private ArrayList<ShelterModel> shelterList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Load configuration for osmdroid
+        Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this));
+
         setContentView(R.layout.activity_shelters_map);
 
         dbHelper = new DatabaseHelper(this);
@@ -31,13 +35,15 @@ public class SheltersMapActivity extends AppCompatActivity implements OnMapReady
 
         findViewById(R.id.btnBack).setOnClickListener(v -> finish());
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        if (mapFragment != null) {
-            mapFragment.getMapAsync(this);
-        }
+        map = findViewById(R.id.map);
+        map.setTileSource(TileSourceFactory.MAPNIK);
+        map.setMultiTouchControls(true);
+
+        IMapController mapController = map.getController();
+        mapController.setZoom(10.0);
 
         loadShelters();
+        displayShelters();
     }
 
     private void loadShelters() {
@@ -52,7 +58,6 @@ public class SheltersMapActivity extends AppCompatActivity implements OnMapReady
                 double lat = cursor.getDouble(cursor.getColumnIndexOrThrow("LATITUDE"));
                 double lng = cursor.getDouble(cursor.getColumnIndexOrThrow("LONGITUDE"));
 
-                // Only add if location is set (not 0.0)
                 if (lat != 0.0 || lng != 0.0) {
                     shelterList.add(new ShelterModel(name, email, contact, city, medInfo, lat, lng));
                 }
@@ -61,27 +66,38 @@ public class SheltersMapActivity extends AppCompatActivity implements OnMapReady
         }
     }
 
-    @Override
-    public void onMapReady(@NonNull GoogleMap googleMap) {
-        mMap = googleMap;
-
-        LatLng defaultFocus = new LatLng(20.5937, 78.9629); // India center as fallback
-
+    private void displayShelters() {
         if (shelterList.isEmpty()) {
-             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultFocus, 5f));
-             return;
+            GeoPoint startPoint = new GeoPoint(20.5937, 78.9629); // India
+            map.getController().setCenter(startPoint);
+            map.getController().setZoom(5.0);
+            return;
         }
 
         for (ShelterModel shelter : shelterList) {
-            LatLng loc = new LatLng(shelter.getLatitude(), shelter.getLongitude());
-            mMap.addMarker(new MarkerOptions()
-                    .position(loc)
-                    .title(shelter.getName())
-                    .snippet(shelter.getCity() + " | " + shelter.getContact()));
+            GeoPoint point = new GeoPoint(shelter.getLatitude(), shelter.getLongitude());
+            Marker startMarker = new Marker(map);
+            startMarker.setPosition(point);
+            startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+            startMarker.setTitle(shelter.getName());
+            startMarker.setSnippet(shelter.getCity() + " | " + shelter.getContact());
+            map.getOverlays().add(startMarker);
         }
 
         // Focus on the first shelter
-        LatLng first = new LatLng(shelterList.get(0).getLatitude(), shelterList.get(0).getLongitude());
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(first, 10f));
+        GeoPoint firstPoint = new GeoPoint(shelterList.get(0).getLatitude(), shelterList.get(0).getLongitude());
+        map.getController().setCenter(firstPoint);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        map.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        map.onPause();
     }
 }

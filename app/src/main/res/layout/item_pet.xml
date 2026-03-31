@@ -26,12 +26,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_toEndOf="@id/imgPet"
+            android:background="@android:color/transparent"
             android:paddingStart="10dp">
 
             <TextView
                 android:id="@+id/txtPetName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
                 android:text="Pet Name"
                 android:textSize="18sp"
                 android:textColor="#3E2723"
@@ -41,6 +43,7 @@
                 android:id="@+id/txtPetAge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
                 android:text="Age"
                 android:textColor="#3E2723"
                 android:textSize="14sp" />
@@ -49,6 +52,7 @@
                 android:id="@+id/txtPetBreed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
                 android:text="Breed"
                 android:textColor="#3E2723"
                 android:textSize="14sp" />
@@ -57,6 +61,7 @@
                 android:id="@+id/txtPetGender"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
                 android:text="Gender"
                 android:textColor="#3E2723"
                 android:textSize="14sp"
@@ -66,12 +71,13 @@
 
         <ImageView
             android:id="@+id/imgFavorite"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:src="@drawable/ic_favorite"
             android:contentDescription="Favorite"
+            android:background="@android:color/transparent"
             card_view:tint="#D84315" />
 
     </RelativeLayout>

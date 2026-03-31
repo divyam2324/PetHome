@@ -9,12 +9,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "Pethome.db";
-    private static final int DATABASE_VERSION = 11; // No change in version needed if just adding a query
+    private static final int DATABASE_VERSION = 15; // Bumped to 15 to fix missing columns
 
     private static final String TABLE_PETS = "PETS";
     private static final String TABLE_REQUESTS = "REQUESTS";
     private static final String TABLE_FAVORITES = "FAVORITES";
     private static final String TABLE_DOCTORS = "DOCTORS";
+    private static final String TABLE_CHAT_HISTORY = "CHAT_HISTORY";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -22,6 +23,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        // Create USERS table with all current columns
         db.execSQL("CREATE TABLE IF NOT EXISTS USERS(" +
                 "USERID INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "NAME TEXT," +
@@ -76,7 +78,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "EXPERIENCE TEXT," +
                 "SHELTER_EMAIL TEXT)");
 
+        db.execSQL("CREATE TABLE IF NOT EXISTS CHAT_HISTORY (" +
+                "ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "SYMPTOMS TEXT," +
+                "DISEASE TEXT," +
+                "URGENCY TEXT," +
+                "TIMESTAMP DATETIME DEFAULT CURRENT_TIMESTAMP)");
+
         insertDummyPets(db);
+        insertDummyShelters(db);
     }
 
     private void insertDummyPets(SQLiteDatabase db) {
@@ -88,24 +98,74 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "VALUES ('Charlie', 'Dog', 'Beagle', '3 Years', 'Male', 1, 0, 'PetHome Admin', 'admin@pethome.com', 'dog_charlie', 'system@pethome.com', 0, 'Needs long walks, loves to sniff everything!')");
     }
 
+    private void insertDummyShelters(SQLiteDatabase db) {
+        // Ensure columns exist before inserting (safety check for upgrade path)
+        try {
+            db.execSQL("INSERT INTO USERS (NAME, EMAIL, CONTACT, PASSWORD, GENDER, CITY, ROLE, MEDICAL_INFO, LATITUDE, LONGITUDE) " +
+                    "VALUES ('Happy Paws Shelter', 'shelter1@pethome.com', '9876543210', '123456', 'Other', 'Mumbai', 'NGO / Shelter', 'Full medical care provided', 19.0760, 72.8777)");
+
+            db.execSQL("INSERT INTO USERS (NAME, EMAIL, CONTACT, PASSWORD, GENDER, CITY, ROLE, MEDICAL_INFO, LATITUDE, LONGITUDE) " +
+                    "VALUES ('Meow pets', 'shelter2@pethome.com', '9123456780', '123456', 'Other', 'Ahmedabad', 'NGO / Shelter', 'Emergency rescue services', 23.0075, 72.5560)");
+
+            db.execSQL("INSERT INTO USERS (NAME, EMAIL, CONTACT, PASSWORD, GENDER, CITY, ROLE, MEDICAL_INFO, LATITUDE, LONGITUDE) " +
+                    "VALUES ('Malav Pet Clinic & Store', 'shelter3@pethome.com', '9988776655', '123456', 'Other', 'Ahmedabad', 'NGO / Shelter', 'Vaccination and checkups', 23.0153, 72.5232)");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (oldVersion < 7) {
             db.execSQL("CREATE TABLE IF NOT EXISTS FAVORITES (ID INTEGER PRIMARY KEY AUTOINCREMENT, USEREMAIL TEXT, PETID INTEGER)");
         }
-        if (oldVersion < 8) {
-            db.execSQL("ALTER TABLE USERS ADD COLUMN MEDICAL_INFO TEXT");
-        }
+        
+        // Safely add columns if they don't exist
+        addColumnIfNotExists(db, "USERS", "MEDICAL_INFO", "TEXT");
+        addColumnIfNotExists(db, "USERS", "LATITUDE", "REAL");
+        addColumnIfNotExists(db, "USERS", "LONGITUDE", "REAL");
+        
         if (oldVersion < 9) {
-            db.execSQL("ALTER TABLE PETS ADD COLUMN CARE_INFO TEXT");
+            addColumnIfNotExists(db, "PETS", "CARE_INFO", "TEXT");
         }
         if (oldVersion < 10) {
             db.execSQL("CREATE TABLE IF NOT EXISTS DOCTORS (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, SPECIALIZATION TEXT, CONTACT TEXT, EXPERIENCE TEXT, SHELTER_EMAIL TEXT)");
         }
-        if (oldVersion < 11) {
-            db.execSQL("ALTER TABLE USERS ADD COLUMN LATITUDE REAL");
-            db.execSQL("ALTER TABLE USERS ADD COLUMN LONGITUDE REAL");
+        if (oldVersion < 13) {
+            insertDummyShelters(db);
         }
+        if (oldVersion < 14) {
+             db.execSQL("CREATE TABLE IF NOT EXISTS CHAT_HISTORY (" +
+                "ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "SYMPTOMS TEXT," +
+                "DISEASE TEXT," +
+                "URGENCY TEXT," +
+                "TIMESTAMP DATETIME DEFAULT CURRENT_TIMESTAMP)");
+        }
+    }
+
+    private void addColumnIfNotExists(SQLiteDatabase db, String tableName, String columnName, String columnType) {
+        try {
+            db.execSQL("ALTER TABLE " + tableName + " ADD COLUMN " + columnName + " " + columnType);
+        } catch (Exception ignored) {
+            // Column already exists
+        }
+    }
+
+    // --- CHAT HISTORY SECTION ---
+
+    public void saveChatHistory(String symptoms, String disease, String urgency) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("SYMPTOMS", symptoms);
+        values.put("DISEASE", disease);
+        values.put("URGENCY", urgency);
+        db.insert(TABLE_CHAT_HISTORY, null, values);
+    }
+
+    public Cursor getChatHistory() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM CHAT_HISTORY ORDER BY TIMESTAMP DESC", null);
     }
 
     // --- DOCTORS SECTION ---

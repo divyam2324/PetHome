@@ -19,6 +19,7 @@
             android:text="Nearby Shelters"
             android:textColor="#3E2723"
             android:textSize="@dimen/_16sdp"
+            android:background="#FFB74D"
             android:textStyle="bold" />
     </RelativeLayout>
 

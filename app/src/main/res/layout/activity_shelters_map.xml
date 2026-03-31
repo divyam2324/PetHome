@@ -19,21 +19,22 @@
             android:layout_height="@dimen/_24sdp"
             android:layout_centerVertical="true"
             android:src="@drawable/ic_back"
+            android:background="#FFB74D"
             app:tint="@color/dark_coffee" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:background="#FFB74D"
             android:text="Nearby Shelters Map"
             android:textColor="@color/dark_coffee"
             android:textSize="@dimen/_16sdp"
             android:textStyle="bold" />
     </RelativeLayout>
 
-    <fragment
+    <org.osmdroid.views.MapView
         android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar" />

@@ -6,12 +6,14 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -24,6 +26,7 @@ public class HomeActivity extends AppCompatActivity {
     DoctorAdapter doctorAdapter;
     ArrayList<PetModel> petList;
     ArrayList<DoctorModel> doctorList;
+    FloatingActionButton fabPetCare;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,7 @@ public class HomeActivity extends AppCompatActivity {
         txtMyRequestsCount = findViewById(R.id.txtMyRequestsCount);
         recyclerNearbyPets = findViewById(R.id.recyclerNearbyPets);
         recyclerHomeDoctors = findViewById(R.id.recyclerHomeDoctors);
+        fabPetCare = findViewById(R.id.fabPetCare);
         
         dbHelper = new DatabaseHelper(this);
         petList = new ArrayList<>();
@@ -199,6 +203,10 @@ public class HomeActivity extends AppCompatActivity {
 
         findViewById(R.id.btnProfile).setOnClickListener(v ->
                 startActivity(new Intent(this, ProfileActivity.class)));
+        
+        fabPetCare.setOnClickListener(v -> {
+            startActivity(new Intent(HomeActivity.this, ChatActivity.class));
+        });
     }
 
     private void checkUserSession() {

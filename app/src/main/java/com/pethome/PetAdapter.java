@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
@@ -76,10 +77,17 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetViewHolder> {
         updateFavoriteIcon(holder.imgFavorite, pet.getId());
 
         holder.imgFavorite.setOnClickListener(v -> {
+            if (userEmail == null || userEmail.isEmpty()) {
+                Toast.makeText(v.getContext(), "Please login to add favorites", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            
             if (dbHelper.isFavorite(userEmail, pet.getId())) {
                 dbHelper.removeFavorite(userEmail, pet.getId());
+                Toast.makeText(v.getContext(), "Removed from favorites", Toast.LENGTH_SHORT).show();
             } else {
                 dbHelper.addFavorite(userEmail, pet.getId());
+                Toast.makeText(v.getContext(), "Added to favorites", Toast.LENGTH_SHORT).show();
             }
             updateFavoriteIcon(holder.imgFavorite, pet.getId());
         });

@@ -9,7 +9,8 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_56sdp"
-        android:background="#3E2723"
+        android:background="#FFB74D"
+
         android:paddingHorizontal="@dimen/_16sdp">
 
         <TextView
@@ -17,7 +18,8 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="Adoption History"
-            android:textColor="#FFFFFF"
+            android:textColor="#3E2723"
+            android:background="#FFB74D"
             android:textSize="@dimen/_16sdp"
             android:textStyle="bold" />
     </RelativeLayout>

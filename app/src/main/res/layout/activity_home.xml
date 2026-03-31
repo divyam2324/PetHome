@@ -20,6 +20,21 @@
         app:labelVisibilityMode="labeled"
         app:menu="@menu/bottom_menu" />
 
+    <!-- Chat Bot FAB -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabPetCare"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottomNav"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_marginBottom="@dimen/_16sdp"
+        android:src="@drawable/ic_bot"
+        android:contentDescription="PetCare ChatBot"
+        app:backgroundTint="#D84315"
+        app:tint="#FFFFFF"
+        app:elevation="@dimen/_6sdp" />
+
     <!-- Main Content -->
     <ScrollView
         android:layout_width="match_parent"
@@ -134,7 +149,7 @@
                 android:layout_marginHorizontal="@dimen/_18sdp"
                 android:layout_marginTop="@dimen/_18sdp" />
 
-            <!-- Quick Action Cards (Reduced set for adopter if needed, but keeping existing structure) -->
+            <!-- Quick Action Cards -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -313,7 +328,7 @@
         </LinearLayout>
     </ScrollView>
 
-    <!-- Invisible placeholder for btnSeeAllRequests to prevent crashes if code references it -->
+    <!-- Invisible placeholder for btnSeeAllRequests -->
     <View android:id="@+id/btnSeeAllRequests" android:layout_width="1dp" android:layout_height="1dp" android:visibility="gone" />
 
 </RelativeLayout>
