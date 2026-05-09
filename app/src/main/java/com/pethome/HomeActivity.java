@@ -136,21 +136,38 @@ public class HomeActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("UserSession", MODE_PRIVATE);
         String email = prefs.getString("email", null);
         if (email != null) {
-            Cursor cursor = dbHelper.getRequestsByUser(email);
-            int count = 0;
-            if (cursor != null) {
-                int statusIndex = cursor.getColumnIndex("STATUS");
+            // Count outgoing pending requests
+            Cursor outCursor = dbHelper.getRequestsByUser(email);
+            int outCount = 0;
+            if (outCursor != null) {
+                int statusIndex = outCursor.getColumnIndex("STATUS");
                 if (statusIndex != -1) {
-                    while (cursor.moveToNext()) {
-                        if ("PENDING".equals(cursor.getString(statusIndex))) {
-                            count++;
-                        }
+                    while (outCursor.moveToNext()) {
+                        if ("PENDING".equals(outCursor.getString(statusIndex))) outCount++;
                     }
                 }
-                cursor.close();
+                outCursor.close();
             }
+
+            // Count incoming pending requests (where the user is the owner)
+            Cursor inCursor = dbHelper.getRequestsForOwner(email);
+            int inCount = 0;
+            if (inCursor != null) {
+                int statusIndex = inCursor.getColumnIndex("STATUS");
+                if (statusIndex != -1) {
+                    while (inCursor.moveToNext()) {
+                        if ("PENDING".equals(inCursor.getString(statusIndex))) inCount++;
+                    }
+                }
+                inCursor.close();
+            }
+
             if (txtMyRequestsCount != null) {
-                txtMyRequestsCount.setText(count + " pending");
+                if (inCount > 0) {
+                    txtMyRequestsCount.setText(inCount + " incoming");
+                } else {
+                    txtMyRequestsCount.setText(outCount + " pending");
+                }
             }
         }
     }
@@ -166,7 +183,8 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(new Intent(this, AdoptActivity.class));
                 return true;
             } else if (id == R.id.nav_requests) {
-                startActivity(new Intent(this, MyRequestsActivity.class));
+                // Determine which request screen to show
+                handleRequestNavigation();
                 return true;
             } else if (id == R.id.nav_profile) {
                 startActivity(new Intent(this, ProfileActivity.class));
@@ -176,6 +194,21 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
+    private void handleRequestNavigation() {
+        SharedPreferences prefs = getSharedPreferences("UserSession", MODE_PRIVATE);
+        String email = prefs.getString("email", null);
+        if (email != null) {
+            Cursor cursor = dbHelper.getRequestsForOwner(email);
+            if (cursor != null && cursor.getCount() > 0) {
+                cursor.close();
+                startActivity(new Intent(this, OwnerRequestActivity.class));
+            } else {
+                if (cursor != null) cursor.close();
+                startActivity(new Intent(this, MyRequestsActivity.class));
+            }
+        }
+    }
+
     private void setupClickListeners() {
         findViewById(R.id.cardListPet).setOnClickListener(v ->
                 startActivity(new Intent(this, ListPetActivity.class)));
@@ -183,8 +216,7 @@ public class HomeActivity extends AppCompatActivity {
         findViewById(R.id.cardAdopt).setOnClickListener(v ->
                 startActivity(new Intent(this, AdoptActivity.class)));
 
-        findViewById(R.id.cardMyRequests).setOnClickListener(v ->
-                startActivity(new Intent(this, MyRequestsActivity.class)));
+        findViewById(R.id.cardMyRequests).setOnClickListener(v -> handleRequestNavigation());
 
         findViewById(R.id.cardShelters).setOnClickListener(v ->
                 startActivity(new Intent(this, SheltersMapActivity.class)));

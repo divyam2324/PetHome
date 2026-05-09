@@ -28,7 +28,7 @@
                 android:maxWidth="@dimen/_220sdp"
                 android:padding="@dimen/_12sdp"
                 android:lineSpacingMultiplier="1.4"
-                android:textColor="#FFFFFF"
+                android:textColor="#3E2723"
                 android:textSize="@dimen/_14sdp" />
         </androidx.cardview.widget.CardView>
 

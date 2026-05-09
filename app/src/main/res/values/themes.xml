@@ -5,7 +5,8 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="materialButtonStyle">@style/Widget.AppCompat.Button</item>
         <item name="android:background">#FFF3E0</item>
-
+        <item name="colorSecondaryContainer">#FFDDA9</item>
+        <item name="colorSurface">#FFDDA9</item>
     </style>
 
     <style name="Theme.PetHome" parent="Base.Theme.PetHome" />
@@ -48,4 +49,5 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/_15sdp</item>
     </style>
+
 </resources>

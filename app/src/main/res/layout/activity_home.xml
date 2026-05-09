@@ -12,12 +12,13 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_62sdp"
         android:layout_alignParentBottom="true"
-        android:background="#FFFFFF"
+        android:background="#FFF3E0"
         android:elevation="@dimen/_10sdp"
         app:itemIconSize="@dimen/_22sdp"
         app:itemIconTint="@drawable/bottom_nav_selector"
         app:itemTextColor="@drawable/bottom_nav_selector"
         app:labelVisibilityMode="labeled"
+        app:itemBackground="@android:color/transparent"
         app:menu="@menu/bottom_menu" />
 
     <!-- Chat Bot FAB -->

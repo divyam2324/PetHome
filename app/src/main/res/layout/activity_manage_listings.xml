@@ -9,7 +9,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_56sdp"
-        android:background="#2E7D32"
+        android:background="@color/honey_bronze"
         android:paddingHorizontal="@dimen/_16sdp">
 
         <ImageView
@@ -18,15 +18,18 @@
             android:layout_height="@dimen/_24sdp"
             android:layout_centerVertical="true"
             android:src="@drawable/ic_back"
-            app:tint="#FFFFFF" />
+            android:background="@color/honey_bronze"
+            app:tint="@color/dark_coffee" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="My Listings"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/dark_coffee"
             android:textSize="@dimen/_16sdp"
+            android:background="@color/honey_bronze"
+
             android:textStyle="bold" />
     </RelativeLayout>
 
@@ -54,7 +57,7 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="@dimen/_20sdp"
         android:src="@drawable/ic_add"
-        app:backgroundTint="#2E7D32"
-        app:tint="#FFFFFF" />
+        app:backgroundTint="@color/honey_bronze"
+        app:tint="@color/dark_coffee" />
 
 </RelativeLayout>

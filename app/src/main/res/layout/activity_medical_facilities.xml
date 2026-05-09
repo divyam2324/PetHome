@@ -9,7 +9,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_80sdp"
-        android:background="@color/honey_bronze"
+        android:background="#2E7D32"
         android:paddingHorizontal="@dimen/_16sdp"
         android:paddingTop="@dimen/_20sdp">
 
@@ -19,16 +19,21 @@
             android:layout_height="@dimen/_24sdp"
             android:layout_centerVertical="true"
             android:src="@drawable/ic_back"
-            app:tint="@color/dark_coffee" />
+            android:background="#2E7D32"
+            app:tint="#FFFF"
+            app:itemBackground="@android:color/transparent"
+            />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="Available Doctors"
-            android:textColor="@color/dark_coffee"
+            android:textColor="#FFFF"
             android:textSize="@dimen/_16sdp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:background="#2E7D32"
+            app:itemBackground="@android:color/transparent"/>
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -56,7 +61,7 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="@dimen/_20sdp"
         android:src="@drawable/ic_add"
-        app:backgroundTint="@color/spicy_orange"
+        app:backgroundTint="#2E7D32"
         app:tint="@color/white" />
 
 </RelativeLayout>

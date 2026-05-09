@@ -77,7 +77,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "CONTACT TEXT," +
                 "EXPERIENCE TEXT," +
                 "SHELTER_EMAIL TEXT)");
-
         db.execSQL("CREATE TABLE IF NOT EXISTS CHAT_HISTORY (" +
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "SYMPTOMS TEXT," +
